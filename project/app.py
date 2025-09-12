@@ -55,10 +55,12 @@ elif st.session_state.uploaded_image is not None:
 
 # --- Step 2: Follow-up questions (only after analysis) ---
 if st.session_state.analysis_done:
-    st.write(st.session_state.last_result)
     user_question = st.text_input("Ask a follow-up question (e.g., 'You missed an item')")
 
     if st.button("Get Response") and user_question:
+        st.subheader("Nutrition Analysis")
+        st.write(st.session_state.last_result)
+
         with st.spinner("Thinking..."):
             config = {"configurable": {"thread_id": st.session_state.thread_id}}
             result_state = calorie_graph.invoke(
