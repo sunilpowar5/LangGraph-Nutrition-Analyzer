@@ -47,6 +47,7 @@ def Identify_foods(state: CalorieState):
                 You are analyzing an image to identify food items. Follow these rules:
                 1. List all visible food items clearly.
                 - Specify quantity (e.g., 2 bananas, 1 slice of bread).
+                - You should definitely specify the quatity of the food items
                 - Mention size/type if relevant (e.g., medium apple, large orange).
                 2. If the food items are unclear or partially visible, suggest the user upload a clearer image.
                 3. If the image does not contain food, tell the user it is not a food image and ask them to upload a proper food image.
