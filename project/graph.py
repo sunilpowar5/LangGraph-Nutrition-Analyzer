@@ -14,20 +14,20 @@ from langchain_core.tools import tool
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.prebuilt import create_react_agent
 
-# 🔹 Load env variables
+# Load env variables
 load_dotenv(override=True)
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 NUTRITIONIX_APP_ID = os.getenv("NUTRITIONIX_APP_ID")
 NUTRITIONIX_API_KEY = os.getenv("NUTRITIONIX_API_KEY")
 
-# 🔹 Clients
+# Clients
 client = genai.Client(api_key=GEMINI_API_KEY)
 llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", api_key=GEMINI_API_KEY)
 
-# 🔹 Memory (for conversational loop)
+# Memory (for conversational loop)
 memory = MemorySaver()
 
-# 🔹 State schema
+# State schema
 class CalorieState(TypedDict):
     image_bytes: Optional[bytes]
     mime: Optional[str]
@@ -37,7 +37,7 @@ class CalorieState(TypedDict):
     user_result: Optional[str]
 
 
-# ------------------ Nodes ------------------
+# Nodes
 def Identify_foods(state: CalorieState):
     """Identify food items from image using Gemini."""
     part = genai_types.Part.from_bytes(
@@ -81,7 +81,7 @@ def nutritionix_fetching(query: str) -> dict:
         return {"error": resp.text}
 
 
-# 🔹 Agent for fetching calories
+# Agent for fetching calories
 agent = create_react_agent(
     model=llm,
     tools=[nutritionix_fetching],
@@ -110,7 +110,7 @@ def fetch_calories(state: CalorieState):
     final_response = response["messages"][-1].content
     return {"result": final_response}
 
-## defining chatbot outside because no need of creating chatbot when it invoke again
+# Defining chatbot outside because, no need of creating new chatbot when graph invoke again and again
 chatbot = create_react_agent(
         model=llm,
         tools=[],
@@ -133,7 +133,7 @@ def user_query_chatbot(state: CalorieState):
     return {"user_result": final_response}
 
 
-# ------------------ Graph ------------------
+# Graph
 def create_calorie_graph():
     builder = StateGraph(CalorieState)
 
@@ -142,7 +142,7 @@ def create_calorie_graph():
     builder.add_node("fetch_calories", fetch_calories)
     builder.add_node("user_query", user_query_chatbot)
 
-    # --- Conditional entry point ---
+    # Conditional entry point
     def start_branch(state: CalorieState) -> str:
         if state.get("image_bytes"):
             return "identify_foods"
@@ -161,10 +161,10 @@ def create_calorie_graph():
         },
     )
 
-    # --- After identify_foods → fetch_calories ---
+    # After identify_foods -> fetch_calories
     builder.add_edge("identify_foods", "fetch_calories")
 
-    # --- Conditional after fetch_calories ---
+    # Conditional after fetch_calories
     def after_fetch(state: CalorieState) -> bool:
         return bool(state.get("user_query"))
 
