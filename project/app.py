@@ -4,7 +4,7 @@ import uuid
 from graph import calorie_graph  
 
 st.set_page_config(page_title="Food Calories & Proteins Analyzer", layout="wide")
-st.title("🥗 Food Calories and Proteins Analyzer")
+st.title("Food Calories and Proteins Analyzer")
 
 # Initialize session state
 if "thread_id" not in st.session_state:
