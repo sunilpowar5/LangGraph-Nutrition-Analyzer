@@ -39,6 +39,9 @@ if uploaded_file is not None:
         st.session_state.analysis_done = False
         st.session_state.chat_history = []
 
+        # Show uploaded image
+        if st.session_state.uploaded_image is not None:
+            st.image(st.session_state.uploaded_image, caption="Uploaded Food Image", width="content")
         # Invoking the graph
         with st.spinner("Analyzing..."):
             config = {"configurable": {"thread_id": st.session_state.thread_id}}
@@ -54,10 +57,6 @@ if uploaded_file is not None:
         st.session_state.nutrition_result = initial_result
         st.session_state.chat_history.append(("system", "Nutrition Analysis"))
         st.session_state.chat_history.append(("assistant", initial_result))
-
-# Show uploaded image
-if st.session_state.uploaded_image is not None:
-    st.image(st.session_state.uploaded_image, caption="Uploaded Food Image", width="content")
 
 # Show chat history
 if st.session_state.chat_history:
