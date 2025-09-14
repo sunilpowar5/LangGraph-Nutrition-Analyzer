@@ -37,8 +37,8 @@ Built with **LangGraph**, **Google Gemini**, **Nutritionix API**, and **Streamli
 ├── .env.example         # Environment variables 
 ├── .gitignore           # Git ignore rules
 ├── .python-version      # Python version specification
-├── pyproject.toml       # Project configuration and dependencies
 ├── README.md            # Project documentation
+├── pyproject.toml       # Project configuration and dependencies
 ├── requirements.txt     # Python dependencies list
 ├── uv.lock              # Lockfile (for reproducible builds with uv)
 
