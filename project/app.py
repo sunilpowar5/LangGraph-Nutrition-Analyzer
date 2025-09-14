@@ -3,7 +3,7 @@ from PIL import Image
 import uuid
 from graph import calorie_graph  
 
-st.set_page_config(page_title="Food Calories & Proteins Analyzer", layout="wide")
+st.set_page_config(page_title="Food Calories & Proteins Analyzer")
 st.title("Food Calories and Proteins Analyzer")
 
 # Initialize session state
