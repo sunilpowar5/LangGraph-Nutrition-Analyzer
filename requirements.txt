@@ -4,3 +4,5 @@ langchain-google-genai
 google-genai
 streamlit
 pillow
+langchain_community
+wikipedia
